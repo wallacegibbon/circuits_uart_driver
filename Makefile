@@ -1,5 +1,5 @@
 BUILD_DIR = build
-TARGET = serialport-proxy
+TARGET = circuits_uart
 
 C_SOURCE_FILES += $(wildcard ./*.c)
 C_SOURCE_FILES += $(wildcard ./ei_copy/*.c)
@@ -13,8 +13,7 @@ CFLAGS += -std=c99 -D_GNU_SOURCE
 
 LD_FLAGS +=
 ifeq ($(OS),Windows_NT)
-# Libraries needed to enumerate serial ports
-LDFLAGS += -lSetupapi -lCfgmgr32
+LD_FLAGS += -lSetupapi -lCfgmgr32
 endif
 
 CC = gcc
