@@ -7,13 +7,15 @@ OBJECTS += $(addprefix $(BUILD_DIR)/, $(notdir $(C_SOURCE_FILES:.c=.c.o)))
 
 C_INCLUDES += ./ ./ei_copy
 
+C_FLAGS ?= -O2 -Wall -Wextra -Wno-unused-parameter
+C_FLAGS += -std=c99 -D_GNU_SOURCE
 C_FLAGS += $(addprefix -I, $(C_INCLUDES)) -MMD -MP -MF"$(@:%.o=%.d)"
-CFLAGS ?= -O2 -Wall -Wextra -Wno-unused-parameter
-CFLAGS += -std=c99 -D_GNU_SOURCE
+#C_FLAGS += -DDEBUG
 
 LD_FLAGS +=
 ifeq ($(OS),Windows_NT)
-LD_FLAGS += -lSetupapi -lCfgmgr32
+C_FLAGS += -DUNICODE
+LD_FLAGS += -lSetupapi -lCfgmgr32 -static
 endif
 
 CC = gcc
